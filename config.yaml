@@ -1,0 +1,17 @@
+miner:
+  executable: 'C:\Users\ellio\Downloads\nsfminer_1.3.7-windows_10-cuda_11.2-opencl\nsfminer.exe'
+  executable_args:
+    - '-P'
+    - 'stratum://XYZ@jp.sparkpool.com:3333'
+    - '-R'
+    - '--HWMON'
+    - '2'
+  error_phrases:
+    - 'gave incorrect result'
+    - 'Hung GPU'
+    - 'Rejected'
+  dag_complete: 'DAG data generated'
+afterburner:
+  executable: 'C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe'
+  profile_normal: 'Profile1'
+  profile_overclocked: 'Profile2'
