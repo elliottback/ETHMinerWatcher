@@ -25,7 +25,7 @@ class Watcher:
         self.minerError = re.compile("|".join(config['miner']['error_phrases']), flags = re.IGNORECASE )
 
         # cleanup
-        def shutdown(self):
+        def shutdown():
             logging.warning("Shutting down...")
             if self.proc is not None:
                 self.proc.kill()
