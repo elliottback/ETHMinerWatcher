@@ -5,6 +5,7 @@ import re
 import sys
 import atexit
 import logging
+import signal
 from yaml import CLoader as Loader
 from yaml import load, dump
 
@@ -66,6 +67,8 @@ class Watcher:
 
             if self.minerError.search(line) is not None:
                 logging.error("Registered Miner Error, giving up and trying again...")
+                self.proc.send_signal(signal.SIGINT)
+                time.sleep(5)
                 self.proc.kill()
                 return
 
