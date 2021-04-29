@@ -9,6 +9,7 @@ import signal
 from yaml import CLoader as Loader
 from yaml import load, dump
 
+
 class Watcher:
     proc = None
     minerExecutable = None
@@ -23,8 +24,8 @@ class Watcher:
         self.minerExecutableArgs = config['miner']['executable_args']
         self.afterBurnerUnclockCommand = '"%s" -%s' % (config['afterburner']['executable'], config['afterburner']['profile_normal'])
         self.afterBurnerClockCommand = '"%s" -%s' % (config['afterburner']['executable'], config['afterburner']['profile_overclocked'])
-        self.dagComplete = re.compile(config['miner']['dag_complete'], flags = re.IGNORECASE )
-        self.minerError = re.compile("|".join(config['miner']['error_phrases']), flags = re.IGNORECASE )
+        self.dagComplete = re.compile(config['miner']['dag_complete'], flags=re.IGNORECASE)
+        self.minerError = re.compile("|".join(config['miner']['error_phrases']), flags=re.IGNORECASE)
         self.sleep = config['sleep']
 
         # cleanup
@@ -42,7 +43,8 @@ class Watcher:
     def startMiner(self):
         cwd = os.path.dirname(self.minerExecutable)
         logging.info("Starting miner %s in %s with args %s" % (self.minerExecutable, cwd, self.minerExecutableArgs))
-        self.proc = subprocess.Popen([self.minerExecutable] + self.minerExecutableArgs, cwd=cwd, stdout=subprocess.PIPE, text=True, shell=True)
+        self.proc = subprocess.Popen([self.minerExecutable] + self.minerExecutableArgs, cwd=cwd, stdout=subprocess.PIPE,
+                                     text=True, shell=True)
 
     def afterburnerUnclock(self):
         logging.info("Unclocking GPU with %s" % self.afterBurnerUnclockCommand)
@@ -64,7 +66,7 @@ class Watcher:
             line = self.proc.stdout.readline()
 
             # log them
-            print(line, file=sys.stdout, end ="")
+            print(line, file=sys.stdout, end="")
 
             # Matching logic
             if self.dagComplete.search(line) is not None:
@@ -73,7 +75,7 @@ class Watcher:
 
             if self.minerError.search(line) is not None:
                 logging.error("Registered Miner Error, giving up and trying again...")
-                self.proc.kill()
+                self.stopMiner()
                 time.sleep(20)
                 return
 
@@ -87,12 +89,12 @@ class Watcher:
 
 
 # Configuration
-configFile = open( 'config.yaml', 'r' )
+configFile = open('config.yaml', 'r')
 configData = load(configFile, Loader=Loader)
 
 # log the config
 logging.basicConfig(level=logging.INFO)
-logging.info( dump( configData ) )
+logging.info(dump(configData))
 
 # Run
-Watcher(configData).run();
+Watcher(configData).run()
