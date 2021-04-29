@@ -42,7 +42,7 @@ class Watcher:
     def startMiner(self):
         cwd = os.path.dirname(self.minerExecutable)
         logging.info("Starting miner %s in %s with args %s" % (self.minerExecutable, cwd, self.minerExecutableArgs))
-        self.proc = subprocess.Popen([self.minerExecutable] + self.minerExecutableArgs, cwd=cwd, stdout=subprocess.PIPE, text=True, shell=True, preexec_fn=os.setsid)
+        self.proc = subprocess.Popen([self.minerExecutable] + self.minerExecutableArgs, cwd=cwd, stdout=subprocess.PIPE, text=True, shell=True)
 
     def afterburnerUnclock(self):
         logging.info("Unclocking GPU with %s" % self.afterBurnerUnclockCommand)
