@@ -76,7 +76,7 @@ class Watcher:
             if self.minerError.search(line) is not None:
                 logging.error("Registered Miner Error, giving up and trying again...")
                 self.stopMiner()
-                time.sleep(20)
+                time.sleep(self.sleep)
                 return
 
     def run(self):
@@ -85,7 +85,7 @@ class Watcher:
                 self.operate()
             except Exception as e:
                 logging.error(e)
-                time.sleep(5)
+                time.sleep(self.sleep)
 
 
 # Configuration
