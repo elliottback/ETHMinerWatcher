@@ -67,7 +67,7 @@ class Watcher:
             if self.minerError.search(line) is not None:
                 logging.error("Registered Miner Error, giving up and trying again...")
                 self.proc.kill()
-                time.sleep(5)
+                time.sleep(20)
                 return
 
     def run(self):
