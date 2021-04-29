@@ -1,3 +1,4 @@
+# ETH miner settings
 miner:
   executable: 'C:\Users\ellio\Downloads\nsfminer_1.3.7-windows_10-cuda_11.2-opencl\nsfminer.exe'
   executable_args:
@@ -11,7 +12,10 @@ miner:
     - 'Hung GPU'
     - 'Rejected'
   dag_complete: 'DAG data generated'
+# Afterburner executable and profiles
 afterburner:
   executable: 'C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe'
   profile_normal: 'Profile1'
   profile_overclocked: 'Profile2'
+# How to sleep on errors
+sleep: 20
