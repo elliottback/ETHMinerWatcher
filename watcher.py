@@ -5,6 +5,7 @@ import re
 import sys
 import atexit
 import logging
+import signal
 from yaml import CLoader as Loader
 from yaml import load, dump
 
@@ -15,6 +16,7 @@ class Watcher:
     afterBurnerUnclockCommand = None
     afterBurnerClockCommand = None
     dagComplete = None
+    sleep = 20
 
     def __init__(self, config):
         self.minerExecutable = '%s' % config['miner']['executable']
@@ -23,19 +25,24 @@ class Watcher:
         self.afterBurnerClockCommand = '"%s" -%s' % (config['afterburner']['executable'], config['afterburner']['profile_overclocked'])
         self.dagComplete = re.compile(config['miner']['dag_complete'], flags = re.IGNORECASE )
         self.minerError = re.compile("|".join(config['miner']['error_phrases']), flags = re.IGNORECASE )
+        self.sleep = config['sleep']
 
         # cleanup
         def shutdown():
-            logging.warning("Shutting down...")
-            if self.proc is not None:
-                self.proc.kill()
+            self.stopMiner()
 
         atexit.register(shutdown)
+
+    def stopMiner(self):
+        logging.warning("Shutting down miner...")
+
+        if self.proc is not None:
+            os.kill(self.proc.pid, signal.CTRL_C_EVENT)
 
     def startMiner(self):
         cwd = os.path.dirname(self.minerExecutable)
         logging.info("Starting miner %s in %s with args %s" % (self.minerExecutable, cwd, self.minerExecutableArgs))
-        self.proc = subprocess.Popen([self.minerExecutable] + self.minerExecutableArgs, cwd=cwd, stdout=subprocess.PIPE, text=True, shell=True)
+        self.proc = subprocess.Popen([self.minerExecutable] + self.minerExecutableArgs, cwd=cwd, stdout=subprocess.PIPE, text=True, shell=True, preexec_fn=os.setsid)
 
     def afterburnerUnclock(self):
         logging.info("Unclocking GPU with %s" % self.afterBurnerUnclockCommand)
