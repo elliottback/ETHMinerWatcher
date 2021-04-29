@@ -35,6 +35,8 @@ afterburner:
 
 # Requires
 
+* Windows 10 (untested on other platforms)
 * [NSFMiner](https://github.com/no-fee-ethereum-mining/nsfminer) -- or other windows miner
+** Untested on other miners
 * [MSI Afterburner](https://www.guru3d.com/files-details/msi-afterburner-beta-download.html) -- for overclock settings
 * [Python](https://www.python.org/downloads/) - to run the watcher
