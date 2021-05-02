@@ -18,11 +18,11 @@ Ensure that you have a normal profile, and a mining profile, and set them in `co
 
 Normal Profile:
 
-![normal profile](./img/profile1.png?raw=true)
+![normal profile](./img/profile1.PNG?raw=true)
 
 Mining Profile:
 
-![mining profile](./img/profile2.png?raw=true)
+![mining profile](./img/profile2.PNG?raw=true)
 
 And in the `config.yml`, we have:
 
