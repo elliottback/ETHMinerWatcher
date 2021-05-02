@@ -5,10 +5,9 @@ import re
 import sys
 import atexit
 import logging
-import signal
+import psutil
 from yaml import CLoader as Loader
 from yaml import load, dump
-
 
 class Watcher:
     proc = None
@@ -38,7 +37,10 @@ class Watcher:
         logging.warning("Shutting down miner...")
 
         if self.proc is not None:
-            os.kill(self.proc.pid, signal.CTRL_C_EVENT)
+            process = psutil.Process(self.proc.pid)
+            for proc in process.children(recursive=True):
+                proc.kill()
+            process.kill()
 
     def startMiner(self):
         cwd = os.path.dirname(self.minerExecutable)
