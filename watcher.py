@@ -70,6 +70,8 @@ class Watcher:
             # log them
             print(line, file=sys.stdout, end="")
 
+            # Hashrate depletion logic - if you deviate from the longer term average, give up.
+
             # Matching logic
             if self.dagComplete.search(line) is not None:
                 logging.info("Registered DAG complete")
@@ -87,6 +89,9 @@ class Watcher:
                 self.operate()
             except Exception as e:
                 logging.error(e)
+                time.sleep(self.sleep)
+            except:
+                logging.error("Something bad happened, trying more...")
                 time.sleep(self.sleep)
 
 
