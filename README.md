@@ -10,7 +10,7 @@ Ensure your paths and arguments are correct in `config.yaml`.
 
 ## Admin
 
-You must run this as admin, or MSI Afterburner launch will produce UAC prompts
+You must run this as admin, or MSI Afterburner launch will produce UAC prompts.  You must also have Afterburner already running.
 
 ## Afterburner
 
