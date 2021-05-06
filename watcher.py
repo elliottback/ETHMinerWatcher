@@ -91,7 +91,7 @@ class Watcher:
                 logging.error(e)
                 time.sleep(self.sleep)
             except:
-                logging.error("Something bad happened: %s" % sys.exc_info())
+                logging.error("Something bad happened: %s" % str(sys.exc_info()))
                 time.sleep(self.sleep)
 
 
